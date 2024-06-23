@@ -117,15 +117,15 @@ class ENVI:
 
         if sp.issparse(self.sc_data.X):
             self.sc_data.X = self.sc_data.X.A
-        if sp.issparse(self.sc_data.layers['log']):
+        if 'log' in self.sc_data.layers and sp.issparse(self.sc_data.layers['log']):
             self.sc_data.layers['log'] = self.sc_data.layers['log'].A
-        if sp.issparse(self.sc_data.layers['log1p']):
+        if 'log1p' in self.sc_data.layers and sp.issparse(self.sc_data.layers['log1p']):
             self.sc_data.layers['log1p'] = self.sc_data.layers['log1p'].A
         if sp.issparse(self.spatial_data.X):
             self.spatial_data.X = self.spatial_data.X.A
-        if sp.issparse(self.spatial_data.layers['log']):
+        if 'log' in self.spatial_data.layers and sp.issparse(self.spatial_data.layers['log']):
             self.spatial_data.layers['log'] = self.spatial_data.layers['log'].A
-        if sp.issparse(self.spatial_data.layers['log1p']):
+        if 'log1p' in self.spatial_data.layers and sp.issparse(self.spatial_data.layers['log1p']):
             self.spatial_data.layers['log1p'] = self.spatial_data.layers['log1p'].A
         if sp.issparse(self.spatial_data.obsm[spatial_key]):
             self.spatial_data.obsm[spatial_key] = self.spatial_data.obsm[spatial_key].A
