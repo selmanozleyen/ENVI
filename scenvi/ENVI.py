@@ -9,6 +9,7 @@ import scanpy as sc
 import sklearn.neighbors
 import tensorflow_probability.substrates.jax as jax_prob # type: ignore
 from flax import linen as nn
+import scipy.sparse as sp
 from jax import jit, random
 from tqdm import trange
 
@@ -113,6 +114,22 @@ class ENVI:
         self.sc_data = self.sc_data[
             :, list(self.overlap_genes) + list(self.non_overlap_genes)
         ]
+
+        if sp.issparse(self.sc_data.X):
+            self.sc_data.X = self.sc_data.X.A
+        if sp.issparse(self.sc_data.layers['log']):
+            self.sc_data.layers['log'] = self.sc_data.layers['log'].A
+        if sp.issparse(self.sc_data.layers['log1p']):
+            self.sc_data.layers['log1p'] = self.sc_data.layers['log1p'].A
+        if sp.issparse(self.spatial_data.X):
+            self.spatial_data.X = self.spatial_data.X.A
+        if sp.issparse(self.spatial_data.layers['log']):
+            self.spatial_data.layers['log'] = self.spatial_data.layers['log'].A
+        if sp.issparse(self.spatial_data.layers['log1p']):
+            self.spatial_data.layers['log1p'] = self.spatial_data.layers['log1p'].A
+        if sp.issparse(self.spatial_data.obsm[spatial_key]):
+            self.spatial_data.obsm[spatial_key] = self.spatial_data.obsm[spatial_key].A
+        
 
         if batch_key not in spatial_data.obs.columns:
             batch_key = -1
