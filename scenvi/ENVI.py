@@ -110,10 +110,10 @@ class ENVI:
             list(set(self.sc_data.var_names) - set(self.spatial_data.var_names))
         )
 
-        self.spatial_data = self.spatial_data[:, list(self.overlap_genes)]
+        self.spatial_data = self.spatial_data[:, list(self.overlap_genes)].copy()
         self.sc_data = self.sc_data[
             :, list(self.overlap_genes) + list(self.non_overlap_genes)
-        ]
+        ].copy()
 
         if sp.issparse(self.sc_data.X):
             self.sc_data.X = self.sc_data.X.A
